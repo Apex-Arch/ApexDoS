@@ -6,7 +6,7 @@ import string
 import os
 
 TARGET_IP = input("TARGET IP: ")
-TARGET_PORT = int(input("OPEN PORT: ")
+TARGET_PORT = int(input("OPEN PORT: "))
 os.system("clear")
 print("MADE BY apexvr_ ON TIKTOK")
 NUM_THREADS = 2000
