@@ -3,6 +3,7 @@ import threading
 
 TARGET_IP = input("TARGET IP: ")
 TARGET_PORT = int(input("OPEN PORT: "))
+print("MADE BY apexvr_ ON TIKTOK")
 NUM_THREADS = 50
 
 def send_packets():
