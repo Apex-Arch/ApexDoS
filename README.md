@@ -6,5 +6,5 @@ LINUX:
 5. python3 ApexDoS.py
 
 DISCLAIMERS:
-* I do **NOT** take responsibiity for any illegal activity's done with this tool. Use with cautition and only with allowance.
+* I do **NOT** take responsibiity for any illegal activity's done with this tool. Use with cautition and allowance.
 * Yeah bout' it, have fun!
