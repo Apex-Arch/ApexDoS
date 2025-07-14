@@ -1,3 +1,4 @@
+# shit doesnt work 💔
 import socket
 import time
 import os
