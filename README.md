@@ -1,3 +1,4 @@
+***DOESNT WORK AT THE MOMENT (PROBABLY WONT)***
 ***LINUX***:
 1. sudo apt update && sudo apt upgrade
 2. sudo apt install git
